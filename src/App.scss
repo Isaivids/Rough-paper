@@ -12,3 +12,11 @@ $grid-breakpoints: (
 .img{
   width: 7rem;
 }
+
+Button:focus,
+Button:active,
+Form:focus,
+Form:active{
+    box-shadow:none !important;
+    outline:0px !important;
+}
