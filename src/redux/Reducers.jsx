@@ -1,4 +1,4 @@
-import { ADD, EDIT, PROGRESS, REMOVE, RESET } from "./Actions";
+import { ADD, PROGRESS, REMOVE, RESET, UPDATE_TODO } from "./Actions";
 import {data} from './States'
 
 export const reducer = (state = data, action) =>{
@@ -23,6 +23,21 @@ export const reducer = (state = data, action) =>{
             let reset = [...state];
             reset.splice(0,state.length)
             return reset;
+        
+            case UPDATE_TODO:
+                let updatedContent = [...state];
+                let index = -1;
+                for (let i = 0; i < updatedContent.length; i++) {
+                    index++;
+                    if (updatedContent[i].id === action.payload.id) {
+                        break;
+                    }
+    
+                }
+                if (index !== -1) {
+                    updatedContent[index] = action.payload;
+                    return updatedContent;
+                }
     
         default:
             return state;

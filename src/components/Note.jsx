@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import {useDispatch} from 'react-redux'
-import {Button, ListGroup, Modal} from 'react-bootstrap'
-import { remove,progress, edit } from '../redux/Actions';
+import {Button, Form, InputGroup, ListGroup, Modal, Row} from 'react-bootstrap'
+import { remove,progress, updateTodo } from '../redux/Actions';
  
 const Note = ({note}) => {
 const dispatch = useDispatch();
 const [show, setShow] = useState(false);
 const [editable, setEditable] = useState(false)
-const [editContent, setEditContent] = useState(note.name);
+const [editContent, setEditcontent] = useState(note.content);
 
 const Popover = () =>{
   return(
@@ -23,21 +23,22 @@ const Popover = () =>{
     </Modal>
   )
 }
-
   return (
     <div>
         <div className='mx-3 d-flex gap-4 my-3 justify-content-center'>
           {editable ?
-            <ListGroup.Item  className="col-sm-4 col-6" value={editContent} onChange={(e) => setEditContent(e.target.value)}/>
+            <Row className='col-sm-4 col-4'><Form.Control required value={editContent} onChange={(e) => setEditcontent(e.target.value)}/></Row>
           :
-          <ListGroup.Item className='col-sm-4 col-6'>
+          <Row className='col-sm-4 col-4'>
             <h6 className={note.progress ? 'text-primary': 'text-muted text-decoration-line-through'}>{note.content}</h6>
-          </ListGroup.Item>
+          </Row>
           }
-          {/* <ListGroup.Item  className='col-sm-4 col'>
-            <h6 className={note.progress ? 'text-primary': 'text-muted text-decoration-line-through'}>{note.content}</h6>
-          </ListGroup.Item> */}
-          <Button variant='primary'>X</Button>        
+          <Button variant='primary' onClick={() =>{
+            return(
+              setEditable(!editable),
+              dispatch(updateTodo({...note, content : editContent}))
+            )
+          } }>{editable?"X":"Y"}</Button>        
           {/* <Button className='btn btn-danger' onClick={()=>dispatch(remove(note.id))}>-</Button> */}
           <Button variant="danger" disabled={editable} onClick={()=>setShow(true)}>-</Button>
           <Button variant="warning" disabled={editable} onClick={()=>dispatch(progress(note.id))}>{note.progress ? "S" :"C" }</Button>

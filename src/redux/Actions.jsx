@@ -1,6 +1,6 @@
 export const ADD ='ADD';
 export const REMOVE ='REMOVE';
-export const EDIT ='EDIT';
+export const UPDATE_TODO = "UPDATE_TODO";
 export const PROGRESS ='PROGRESS';
 export const RESET ='RESET';
 
@@ -19,10 +19,10 @@ export function remove(dataId) {
     }
 }
 
-export function edit(data) {
-    return{
-        type: EDIT,
-        payload: data,
+export function updateTodo(todo) {
+    return {
+        type:UPDATE_TODO,
+        payload: todo,
     }
 }
 
