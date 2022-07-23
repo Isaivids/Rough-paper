@@ -1,9 +1,11 @@
 import React,{useRef, useState} from 'react'
 import {Button,Form, Modal} from 'react-bootstrap'
 import { data } from '../redux/States';
-import { add,reset } from '../redux/Actions';
+import { add,asc,dsc,reset } from '../redux/Actions';
 import {useDispatch, useSelector} from 'react-redux'
 import uniqid from 'uniqid';
+import { faArrowDownAZ, faArrowDownZA, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const InputPanel = () => {
   const dispatch = useDispatch();
@@ -11,6 +13,7 @@ const InputPanel = () => {
   const [name, setName] = useState(data.content);
   const ipref = useRef();
   const [show, setShow] = useState(false);
+  const [sort, setSort] = useState(false);
   // const [validated, setValidated] = useState(false);
 
   const handleSubmit = (e) => {
@@ -43,8 +46,13 @@ const InputPanel = () => {
     )
   }
 
+  const handleSort = () =>{
+    // eslint-disable-next-line no-lone-blocks
+    {sort ? dispatch(asc(contents)) : dispatch(dsc(contents)) }
+  }
+
   return (
-    <div>
+    <div className='bg-dark'>
     {/* <div className="my-3 d-sm-flex justify-content-center">
           <Form className='col-sm-6'>
             <input
@@ -62,8 +70,7 @@ const InputPanel = () => {
             setName('');
           }} >Add note</Button>
       </div> */}
-
-      <Form noValidate /*validated={validated}*/ onSubmit={handleSubmit} className="m-3 d-flex flex-wrap justify-content-center">
+      <Form noValidate /*validated={validated}*/ onSubmit={handleSubmit} className="p-3 d-flex flex-wrap justify-content-center">
         <Form.Group className='col-sm-6 col-10'>
           <Form.Control
             value = {data.content}
@@ -75,16 +82,20 @@ const InputPanel = () => {
           />
         </Form.Group>
         <Form.Group className='mx-sm-2 my-4 my-sm-0 gap-sm-2'>
-          <Button variant="success" disabled={!name} type="submit">Add Note</Button>
+          <Button variant="success" disabled={!name} type="submit"><FontAwesomeIcon icon={faPlus}/></Button>
           {/* <Button variant="primary mx-2" disabled={!contents.length>0} onClick={()=>setShow(true)}>Clear All</Button> */}
           <Button variant='primary mx-2' className="position-relative" disabled={!contents.length>0} onClick={()=>setShow(true)}>
-            Clear All
+          <FontAwesomeIcon icon={faTrashCan}/>
             {contents.length > 0 ?
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                 {contents.length}
               </span>
             : ''}
           </Button>
+          <Button variant="light" onClick={()=>{
+            setSort(!sort);
+            handleSort()
+          }}>{sort ? <FontAwesomeIcon icon={faArrowDownAZ}/> : <FontAwesomeIcon icon={faArrowDownZA}/>}</Button>
           <Popover/>
         </Form.Group>
         </Form>

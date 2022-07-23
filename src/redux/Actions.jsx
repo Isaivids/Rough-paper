@@ -3,6 +3,8 @@ export const REMOVE ='REMOVE';
 export const UPDATE_TODO = "UPDATE_TODO";
 export const PROGRESS ='PROGRESS';
 export const RESET ='RESET';
+export const DSC ='DSC';
+export const ASC ='ASC';
 
 
 export function add(data) {
@@ -36,6 +38,20 @@ export function progress(dataId) {
 export function reset(data) {
     return{
         type: RESET,
+        payload: data,
+    }
+}
+
+export function asc(data) {
+    return{
+        type: ASC,
+        payload: data,
+    }
+}
+
+export function dsc(data) {
+    return{
+        type: DSC,
         payload: data,
     }
 }

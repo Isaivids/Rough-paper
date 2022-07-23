@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
+import '../App.scss'
 import {useDispatch} from 'react-redux'
-import {Button, Form, InputGroup, ListGroup, Modal, Row} from 'react-bootstrap'
+import {Button,Col,Container,Form, Modal, Row} from 'react-bootstrap'
 import { remove,progress, updateTodo } from '../redux/Actions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck, faCircleMinus, faClipboardCheck, faHourglass, faPencil } from '@fortawesome/free-solid-svg-icons';
  
 const Note = ({note}) => {
 const dispatch = useDispatch();
@@ -15,36 +18,40 @@ const Popover = () =>{
       <Modal.Header closeButton>
         <Modal.Title>Are you sure to Delete</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{note.content}</Modal.Body>
+      <Modal.Body className='text-break'>{note.content}</Modal.Body>
       <Modal.Footer>
         <Button variant="success" onClick={()=>setShow(false)}>No</Button>
-        <Button variant="danger" onClick={()=>dispatch(remove(note.id))}>Sure</Button>
+        <Button variant="danger" onClick={()=>dispatch(remove(note.id))}>Yes</Button>
       </Modal.Footer>
     </Modal>
   )
 }
   return (
-    <div>
-        <div className='mx-3 d-flex gap-4 my-3 justify-content-center'>
+    <Container fluid>
+        <Row className='note p-3 justify-content-center gap-2 mb-2'>
+          <Col sm={8}>
           {editable ?
-            <Row className='col-sm-4 col-4'><Form.Control required value={editContent} onChange={(e) => setEditcontent(e.target.value)}/></Row>
+            <Col sm={10}><Form.Control required value={editContent} onChange={(e) => setEditcontent(e.target.value)}/></Col>
           :
-          <Row className='col-sm-4 col-4'>
-            <h6 className={note.progress ? 'text-primary': 'text-muted text-decoration-line-through'}>{note.content}</h6>
-          </Row>
+          <Col sm={10}>
+            <p className={note.progress ? 'text-dark fw-bold': 'fw-bold text-muted text-decoration-line-through'}>{note.content}</p>
+          </Col>
           }
-          <Button variant='primary' onClick={() =>{
+          </Col>
+          <Col sm={2} className='d-flex justify-content-center gap-2'>
+          <Button variant={editable ?'success' :'primary'} onClick={() =>{
             return(
               setEditable(!editable),
               dispatch(updateTodo({...note, content : editContent}))
             )
-          } }>{editable?"X":"Y"}</Button>        
+          } }>{editable?<FontAwesomeIcon icon={faCircleCheck}/>:<FontAwesomeIcon icon={faPencil}/>}</Button>        
           {/* <Button className='btn btn-danger' onClick={()=>dispatch(remove(note.id))}>-</Button> */}
-          <Button variant="danger" disabled={editable} onClick={()=>setShow(true)}>-</Button>
-          <Button variant="warning" disabled={editable} onClick={()=>dispatch(progress(note.id))}>{note.progress ? "S" :"C" }</Button>
+          <Button variant="danger" disabled={editable} onClick={()=>setShow(true)}><FontAwesomeIcon icon={faCircleMinus} /></Button>
+          <Button variant="warning text-white" disabled={editable} onClick={()=>dispatch(progress(note.id))}>{note.progress ? <FontAwesomeIcon icon={faClipboardCheck}/>: <FontAwesomeIcon icon={faHourglass}/> }</Button>
+          </Col>
           <Popover />
-        </div>
-    </div>
+        </Row>
+    </Container>
   )
 }
 

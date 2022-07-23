@@ -14,9 +14,16 @@ $grid-breakpoints: (
 }
 
 Button:focus,
-Button:active,
-Form:focus,
-Form:active{
+Button:active{
     box-shadow:none !important;
     outline:0px !important;
 }
+
+.note{
+  background-color: rgba(195, 195, 195, 0.151);
+  min-height: 80px;
+  align-items: center;
+  border-radius: 10px;
+}
+
+

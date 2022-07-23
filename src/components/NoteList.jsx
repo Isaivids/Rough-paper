@@ -8,8 +8,8 @@ const NoteList = () => {
   const [input, setInput] = useState('');
   return (
     <Container>
-      <Row className='d-flex justify-content-center'>
-        <Form.Group className="col-4">
+      <Row sm={4} className='p-4 justify-content-center'>
+        <Form.Group>
           <Form.Control
             required
             value={input}

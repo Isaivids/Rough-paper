@@ -1,4 +1,4 @@
-import { ADD, PROGRESS, REMOVE, RESET, UPDATE_TODO } from "./Actions";
+import { ADD, ASC, DSC, PROGRESS, REMOVE, RESET, UPDATE_TODO } from "./Actions";
 import {data} from './States'
 
 export const reducer = (state = data, action) =>{
@@ -24,7 +24,7 @@ export const reducer = (state = data, action) =>{
             reset.splice(0,state.length)
             return reset;
         
-            case UPDATE_TODO:
+        case UPDATE_TODO:
                 let updatedContent = [...state];
                 let index = -1;
                 for (let i = 0; i < updatedContent.length; i++) {
@@ -38,6 +38,17 @@ export const reducer = (state = data, action) =>{
                     updatedContent[index] = action.payload;
                     return updatedContent;
                 }
+                break;
+        
+        case ASC:
+            let asc = [...state];
+            asc.sort((a, b) => (a.content > b.content) ? 1 : -1);
+            return asc;
+
+        case DSC:
+            let dsc = [...state];
+            dsc.sort((a, b) => (b.content > a.content) ? 1 : -1);
+            return dsc;
     
         default:
             return state;
