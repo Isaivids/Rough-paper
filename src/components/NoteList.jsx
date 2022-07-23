@@ -20,7 +20,7 @@ const NoteList = () => {
           />
         </Form.Group>
       </Row>
-      {contents.filter(note =>(note.content.toLowerCase().includes(input.toLowerCase()))).map((content)=>{
+      {contents.filter(note =>(note.content?.toLowerCase().includes(input.toLowerCase()))).map((content)=>{
         return(
           <Note key={content.id} note={content}/>
         )
