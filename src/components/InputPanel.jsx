@@ -92,7 +92,7 @@ const InputPanel = () => {
               </span>
             : ''}
           </Button>
-          <Button variant="light" onClick={()=>{
+          <Button variant="light" disabled={!contents.length>0} onClick={()=>{
             setSort(!sort);
             handleSort()
           }}>{sort ? <FontAwesomeIcon icon={faArrowDownAZ}/> : <FontAwesomeIcon icon={faArrowDownZA}/>}</Button>
